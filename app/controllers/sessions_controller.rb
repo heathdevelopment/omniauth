@@ -3,15 +3,12 @@ class SessionsController < ApplicationController
     end
 
     def create
-        puts ' omini info: ' + request.env['omniauth.auth'].to_s
-        begin
-            @user = User.from_omniauth(request.env['omniauth.auth'])
-            session[:user_id] = @user.id
-            flash[:success] = "Welcome, #{@user.name}!"
-        rescue
-            flash[:warning] = "There was an error while trying to authenticate you..."
-        end
-        redirect_to root_path  
+      @auth = request.env['omniauth.auth']['credentials']
+      Token.create(
+            access_token: @auth['token'],
+            refresh_token: @auth['refresh_token'],
+            email: @auth['email'],
+            expires_at: Time.at(@auth['expires_at']).to_datetime) 
     end
     
     def destroy

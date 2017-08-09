@@ -13,7 +13,7 @@ gem 'rails', '~> 5.1.2'
 gem 'bootstrap-sass'
 
 #twitter OAuth2.0
-gem 'omniauth-twitter'
+
 gem 'omniauth-google-oauth2'
 
 
